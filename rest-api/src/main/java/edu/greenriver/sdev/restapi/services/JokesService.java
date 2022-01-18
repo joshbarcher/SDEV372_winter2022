@@ -51,20 +51,25 @@ public class JokesService
             .findFirst().orElse(null);
     }
 
-    public void addJoke(Joke joke)
+    public Joke addJoke(Joke joke)
     {
         //save a new id to the joke object being saved
         joke.setJokeId(nextId++);
         jokes.add(joke);
+        return joke;
     }
 
-    public void editJoke(int jokeId, Joke joke)
+    public Joke editJoke(int jokeId, Joke editedJoke)
     {
-        Joke match = getJokeById(jokeId);
-        if (match != null)
+        Joke savedJoke = getJokeById(jokeId);
+        if (savedJoke != null)
         {
-            match.setJokeText(joke.getJokeText());
+            savedJoke.setJokeText(editedJoke.getJokeText());
+            return savedJoke;
         }
+
+        //what should we do here?
+        throw new IllegalArgumentException("Joke with id " + jokeId + " not found!");
     }
 
     public void deleteJoke(int jokeId)

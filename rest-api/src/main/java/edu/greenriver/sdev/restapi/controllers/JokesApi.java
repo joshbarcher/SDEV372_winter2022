@@ -33,15 +33,15 @@ public class JokesApi
     }
 
     @PostMapping("jokes")
-    public void addJoke(@RequestBody Joke joke)
+    public Joke addJoke(@RequestBody Joke joke)
     {
-        service.addJoke(joke);
+        return service.addJoke(joke);
     }
 
     @PutMapping("jokes/{jokeId}")
-    public void updateJoke(@PathVariable int jokeId, @RequestBody Joke joke)
+    public Joke updateJoke(@PathVariable int jokeId, @RequestBody Joke joke)
     {
-        service.editJoke(jokeId, joke);
+        return service.editJoke(jokeId, joke);
     }
 
     @DeleteMapping("jokes/{jokeId}")

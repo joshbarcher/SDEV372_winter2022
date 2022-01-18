@@ -44,6 +44,13 @@ public class JokesService
         return jokes;
     }
 
+    public Joke getJokeById(int id)
+    {
+        return jokes.stream()
+            .filter(joke -> joke.getJokeId() == id)
+            .findFirst().orElse(null);
+    }
+
     public void addJoke(Joke joke)
     {
         //save a new id to the joke object being saved
@@ -51,16 +58,23 @@ public class JokesService
         jokes.add(joke);
     }
 
-    //fix this later
-    public void editJoke(Joke joke)
+    public void editJoke(int jokeId, Joke joke)
     {
-
+        Joke match = getJokeById(jokeId);
+        if (match != null)
+        {
+            match.setJokeText(joke.getJokeText());
+        }
     }
 
-    //fix this later
-    public void deleteJoke()
+    public void deleteJoke(int jokeId)
     {
-
+        Joke match = getJokeById(jokeId);
+        if (match != null)
+        {
+            //we need to find this element in our list and remove it
+            jokes.remove(match);
+        }
     }
 }
 

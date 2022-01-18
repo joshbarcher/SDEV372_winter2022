@@ -26,21 +26,27 @@ public class JokesApi
         return service.getJokes();
     }
 
+    @GetMapping("jokes/{jokeId}")
+    public Joke getSingleJoke(@PathVariable int jokeId)
+    {
+        return service.getJokeById(jokeId);
+    }
+
     @PostMapping("jokes")
-    public void addJoke(Joke joke)
+    public void addJoke(@RequestBody Joke joke)
     {
         service.addJoke(joke);
     }
 
-    @PutMapping("jokes")
-    public void updateJoke(Joke joke)
+    @PutMapping("jokes/{jokeId}")
+    public void updateJoke(@PathVariable int jokeId, @RequestBody Joke joke)
     {
-
+        service.editJoke(jokeId, joke);
     }
 
-    @DeleteMapping("jokes")
-    public void deleteJoke()
+    @DeleteMapping("jokes/{jokeId}")
+    public void deleteJoke(@PathVariable int jokeId)
     {
-
+        service.deleteJoke(jokeId);
     }
 }

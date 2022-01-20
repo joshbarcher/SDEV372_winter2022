@@ -12,7 +12,7 @@ public class AppJokeService
     {
         //this service relies on a "remote" web api
         RestTemplate rest = new RestTemplate();
-        ResponseEntity<Joke[]> response = rest.getForEntity("http://localhost:8080/jokes", Joke[].class);
+        ResponseEntity<Joke[]> response = rest.getForEntity("http://localhost:8080/api/v1/jokes", Joke[].class);
         Joke[] jokes = response.getBody();
         return jokes;
     }

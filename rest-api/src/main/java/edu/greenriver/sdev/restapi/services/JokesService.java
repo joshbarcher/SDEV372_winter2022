@@ -39,6 +39,11 @@ public class JokesService
         }
     }
 
+    public boolean idMatchesJoke(int id)
+    {
+        return id >= 0 && id < nextId;
+    }
+
     public List<Joke> getJokes()
     {
         return jokes;

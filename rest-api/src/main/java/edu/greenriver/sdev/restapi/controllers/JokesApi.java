@@ -2,6 +2,8 @@ package edu.greenriver.sdev.restapi.controllers;
 
 import edu.greenriver.sdev.restapi.model.Joke;
 import edu.greenriver.sdev.restapi.services.JokesService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
  *
  */
 @RestController
+@RequestMapping("api/v1/jokes") //start all routes with /jokes
 public class JokesApi
 {
     private JokesService service;
@@ -20,31 +23,43 @@ public class JokesApi
         this.service = service;
     }
 
-    @GetMapping("jokes")
-    public List<Joke> getAllJokes()
+    @GetMapping("")
+    public ResponseEntity<List<Joke>> getAllJokes()
     {
-        return service.getJokes();
+        return new ResponseEntity<>(service.getJokes(), HttpStatus.OK);
     }
 
-    @GetMapping("jokes/{jokeId}")
-    public Joke getSingleJoke(@PathVariable int jokeId)
+    @GetMapping("{jokeId}")
+    public ResponseEntity<Joke> getSingleJoke(@PathVariable int jokeId)
     {
-        return service.getJokeById(jokeId);
+        //preconditions (negative ids, or ids that are not in use)
+        if (jokeId < 0)
+        {
+            //what is the status code here?
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        else if (!service.idMatchesJoke(jokeId))
+        {
+            //what is the status code here?
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(service.getJokeById(jokeId), HttpStatus.OK);
     }
 
-    @PostMapping("jokes")
+    @PostMapping("")
     public Joke addJoke(@RequestBody Joke joke)
     {
         return service.addJoke(joke);
     }
 
-    @PutMapping("jokes/{jokeId}")
+    @PutMapping("{jokeId}")
     public Joke updateJoke(@PathVariable int jokeId, @RequestBody Joke joke)
     {
         return service.editJoke(jokeId, joke);
     }
 
-    @DeleteMapping("jokes/{jokeId}")
+    @DeleteMapping("{jokeId}")
     public void deleteJoke(@PathVariable int jokeId)
     {
         service.deleteJoke(jokeId);

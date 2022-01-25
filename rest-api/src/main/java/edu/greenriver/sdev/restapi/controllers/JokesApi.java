@@ -14,6 +14,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("api/v1/jokes") //start all routes with /jokes
+@CrossOrigin(origins="*")
 public class JokesApi
 {
     private JokesService service;

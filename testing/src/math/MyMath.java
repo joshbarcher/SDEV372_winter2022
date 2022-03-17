@@ -6,9 +6,9 @@ public class MyMath
     {
         if (den == 0)
         {
-            throw new ArithmeticException("Cannot divide by zero");
+            return Double.MAX_VALUE;
         }
-        return num / den;
+        throw new ArithmeticException();
     }
 
     public double add(double first, double second)
